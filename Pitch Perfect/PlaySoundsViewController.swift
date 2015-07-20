@@ -38,11 +38,6 @@ class PlaySoundsViewController: UIViewController {
     
     // MARK:
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction func playSlowAudio(sender: UIButton) {
         palyAudioWithRate(0.5)
     }
@@ -60,25 +55,28 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func stopAudio(sender: UIButton) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAll()
     }
     
     // MARK:
     // MARK: helper mthod
     
-    func palyAudioWithRate(rate: Float) {
+    func stopAll(){
         audioPlayer.stop()
-        audioPlayer.rate = rate
         audioPlayer.currentTime = 0.0
+        
+        audioEngine.stop()
+        audioEngine.reset()
+    }
+    
+    func palyAudioWithRate(rate: Float) {
+        stopAll()
+        audioPlayer.rate = rate
         audioPlayer.play()
     }
     
     func palyAudioWithPitch(pitch: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAll()
         
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
